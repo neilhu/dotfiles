@@ -2,14 +2,38 @@
 
 cd "$(dirname "${BASH_SOURCE}")";
 
+RSYNC_EXCLUDES=(
+	--exclude ".git/"
+	--exclude ".DS_Store"
+	--exclude "bootstrap.sh"
+	--exclude "brew.sh"
+	--exclude "README.md"
+	--exclude "LICENSE-MIT.txt"
+)
+
+function doBackup() {
+	local backup_dir="$HOME/.dotfiles_backup/$(date +%Y%m%d_%H%M%S)"
+	local backed_up=0
+
+	while IFS= read -r f; do
+		if [ -e "$HOME/$f" ] && [ ! -d "$HOME/$f" ]; then
+			mkdir -p "$backup_dir/$(dirname "$f")"
+			cp -a "$HOME/$f" "$backup_dir/$f"
+			backed_up=$((backed_up + 1))
+		fi
+	done < <(rsync "${RSYNC_EXCLUDES[@]}" -avn --no-perms --itemize-changes . ~ \
+		| awk '/^>f/ { print $2 }')
+
+	if [ "$backed_up" -gt 0 ]; then
+		echo "Backed up $backed_up file(s) to $backup_dir";
+	else
+		echo "No existing files to back up.";
+	fi;
+}
+
 function doIt() {
-	rsync --exclude ".git/" \
-		--exclude ".DS_Store" \
-		--exclude ".osx" \
-		--exclude "bootstrap.sh" \
-		--exclude "README.md" \
-		--exclude "LICENSE-MIT.txt" \
-		-avh --no-perms . ~;
+	doBackup;
+	rsync "${RSYNC_EXCLUDES[@]}" -avh --no-perms . ~;
 	source ~/.bash_profile;
 }
 
@@ -22,4 +46,4 @@ else
 		doIt;
 	fi;
 fi;
-unset doIt;
+unset doIt doBackup RSYNC_EXCLUDES;
