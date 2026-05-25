@@ -182,6 +182,18 @@ function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
 
+# Show what process is listening on a given port
+function whoisport() {
+	local port="${1:?Usage: whoisport PORT}";
+	ss -tlnp | grep ":${port}" || echo "Nothing listening on port ${port}";
+}
+
+# Show a cheatsheet for a command (via cheat.sh)
+function cheat() {
+	local cmd="${1:?Usage: cheat COMMAND}";
+	curl -s "cheat.sh/${cmd}" | less -RX;
+}
+
 # Show current weather for a location (default: auto-detect)
 function weather() {
 	curl -s "wttr.in/${1:-}?format=3";
