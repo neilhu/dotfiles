@@ -55,3 +55,6 @@ fi;
 # fzf shell integration (fuzzy Ctrl+R history, Ctrl+T file picker, Alt+C dir jump)
 [ -f ~/.fzf.bash ] && source ~/.fzf.bash
 
+# direnv: auto-load .envrc on cd
+command -v direnv &>/dev/null && eval "$(direnv hook bash)"
+

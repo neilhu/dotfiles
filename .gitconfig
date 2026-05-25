@@ -66,6 +66,15 @@
 	# Show the user email for the current repository.
 	whoami = config user.email
 
+	# Undo the last `git add` for a file.
+	unstage = restore --staged
+
+	# Show what the last commit touched.
+	last = log -1 HEAD --stat
+
+	# Modern branch switching.
+	sw = switch
+
 [apply]
 
 	# Detect whitespace errors when applying a patch.
@@ -164,6 +173,8 @@
 	default = simple
 	# Make `git push` push relevant annotated tags when pushing branches out.
 	followTags = true
+	# Automatically set upstream on first push of a new branch.
+	autoSetupRemote = true
 
 # URL shorthands
 

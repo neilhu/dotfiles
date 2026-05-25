@@ -43,6 +43,28 @@ PACKAGES=(
 
 	# vim
 	vim
+
+	# direnv: per-project environment variables
+	direnv
 )
 
 sudo apt install -y "${PACKAGES[@]}"
+
+# Optional modern CLI replacements (faster/nicer than grep/cat/find)
+OPTIONAL=(
+	ripgrep   # rg: faster grep
+	bat       # bat: cat with syntax highlighting
+	fd-find   # fd: simpler, faster find
+)
+
+echo ""
+echo "Install optional modern CLI tools? (y/n)"
+read -r -n 1 REPLY
+echo ""
+if [[ "$REPLY" =~ ^[Yy]$ ]]; then
+	sudo apt install -y "${OPTIONAL[@]}"
+	# fd-find installs as fdfind; symlink to fd
+	if command -v fdfind &>/dev/null && ! command -v fd &>/dev/null; then
+		ln -s "$(command -v fdfind)" ~/.local/bin/fd
+	fi
+fi

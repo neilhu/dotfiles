@@ -1,0 +1,3 @@
+#!/usr/bin/env bash
+# Delete all local branches already merged into the current branch.
+git branch --merged | grep -v '^\*\|main\|master\|develop' | xargs -r git branch -d

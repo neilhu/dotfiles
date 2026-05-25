@@ -57,6 +57,13 @@ alias free='free -h'
 alias wget='wget -c'
 alias curl='curl -L'
 
+# Shortcuts
+alias h='history'
+alias j='jobs -l'
+
+# Show listening ports (modern netstat replacement)
+alias ports='ss -tlnp'
+
 # Update installed packages
 alias update='sudo apt update && sudo apt upgrade'
 
