@@ -187,19 +187,22 @@ function weather() {
 	curl -s "wttr.in/${1:-}?format=3";
 }
 
-# Show the latest price for a stock symbol
+# Show the latest price for a stock symbol (uses Stooq, no API key needed)
 function stocks() {
 	local symbol="${1:?Usage: stocks SYMBOL}";
-	curl -s "https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbol}" \
-		| python3 -c "
-import sys, json
-data = json.load(sys.stdin)
-results = data.get('quoteResponse', {}).get('result', [])
-if not results:
-    print('No data found for: $symbol')
+	local data;
+	data=$(curl -s "https://stooq.com/q/l/?s=${symbol,,}.us&f=sd2t2ohlcv&h&e=csv");
+	echo "$data" | python3 -c "
+import sys, csv
+rows = list(csv.DictReader(sys.stdin))
+if not rows or rows[0].get('Close', 'N/D') == 'N/D':
+    print('Symbol not found or no data available')
     sys.exit(1)
-q = results[0]
-name = q.get('longName', q.get('shortName', ''))
-print(f\"{q['symbol']}: \${q['regularMarketPrice']:.2f}  ({q['regularMarketChangePercent']:+.2f}%)  {name}\")
+r = rows[0]
+sym   = r['Symbol'].upper().replace('.US', '')
+price = float(r['Close'])
+prev  = float(r['Open'])
+pct   = (price - prev) / prev * 100
+print(f'{sym}: \${price:.2f}  ({pct:+.2f}% vs open)  [{r[\"Date\"]}]')
 ";
 }
