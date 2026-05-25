@@ -191,7 +191,7 @@ function whoisport() {
 # Show a cheatsheet for a command (via cheat.sh)
 function cheat() {
 	local cmd="${1:?Usage: cheat COMMAND}";
-	curl -s "cheat.sh/${cmd}" | less -RX;
+	curl -s "cheat.sh/${cmd}?T" | less;
 }
 
 # Show current weather for a location (default: auto-detect)
