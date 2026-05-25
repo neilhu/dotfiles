@@ -48,6 +48,11 @@ alias sudo='sudo '
 # Get week number
 alias week='date +%V'
 
+# Human-readable disk and memory info
+alias df='df -h'
+alias du='du -h'
+alias free='free -h'
+
 # Update installed packages
 alias update='sudo apt update && sudo apt upgrade'
 

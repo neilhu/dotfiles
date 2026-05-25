@@ -1,3 +1,11 @@
+# Editor backup and swap files
+*~
+.*.swp
+
+# Environment / secrets
+.env
+.env.*
+
 # Compiled Python files
 *.pyc
 
