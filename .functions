@@ -5,6 +5,11 @@ function mkd() {
 	mkdir -p "$@" && cd "$_";
 }
 
+# Go up N directories (default 1): `up 3` == `cd ../../..`
+function up() {
+	cd "$(printf '../%.0s' $(seq 1 "${1:-1}"))";
+}
+
 # Extract any archive format
 function extract() {
 	if [ -f "$1" ]; then

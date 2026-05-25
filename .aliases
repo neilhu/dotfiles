@@ -53,6 +53,10 @@ alias df='df -h'
 alias du='du -h'
 alias free='free -h'
 
+# Better defaults for download tools
+alias wget='wget -c'
+alias curl='curl -L'
+
 # Update installed packages
 alias update='sudo apt update && sudo apt upgrade'
 

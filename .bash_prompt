@@ -11,6 +11,10 @@ elif infocmp xterm-256color >/dev/null 2>&1; then
 	export TERM='xterm-256color';
 fi;
 
+prompt_venv() {
+	[ -n "$VIRTUAL_ENV" ] && echo "${1}($(basename "$VIRTUAL_ENV"))";
+}
+
 prompt_git() {
 	local s='';
 	local branchName='';
@@ -110,6 +114,7 @@ PS1+="\[${hostStyle}\]\h"; # host
 PS1+="\[${white}\] in ";
 PS1+="\[${green}\]\w"; # working directory full path
 PS1+="\$(prompt_git \"\[${white}\] on \[${violet}\]\" \"\[${blue}\]\")"; # Git repository details
+PS1+="\$(prompt_venv \"\[${white}\] via \[${cyan}\]\")"; # Python virtualenv
 PS1+="\n";
 PS1+="\[${white}\]\$ \[${reset}\]"; # `$` (and reset color)
 export PS1;

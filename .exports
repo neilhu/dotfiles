@@ -18,6 +18,8 @@ export HISTSIZE='32768';
 export HISTFILESIZE="${HISTSIZE}";
 # Omit duplicates and commands that begin with a space from history.
 export HISTCONTROL='ignoreboth';
+# Timestamp each history entry: "YYYY-MM-DD HH:MM:SS  command"
+export HISTTIMEFORMAT='%F %T  ';
 # Write to history file immediately after each command (don't wait for shell exit)
 PROMPT_COMMAND="${PROMPT_COMMAND:+$PROMPT_COMMAND; }history -a"
 

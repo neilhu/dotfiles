@@ -3,6 +3,9 @@
 [[ ":$PATH:" != *":$HOME/.local/bin:"* ]] && PATH="$HOME/.local/bin:$PATH"
 export PATH
 
+# Quick cd to common roots — `cd dotfiles` works from anywhere
+export CDPATH=.:~:~/sources
+
 # Load the shell dotfiles, and then some:
 # * ~/.path can be used to extend `$PATH`.
 # * ~/.extra can be used for other settings you don’t want to commit.
