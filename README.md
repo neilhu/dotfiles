@@ -95,15 +95,18 @@ export PATH="$HOME/.local/bin:$PATH"
 | `diff` | Git's colored word-diff when git is available |
 | `localip` | Current machine's LAN IP |
 | `urlencode <str>` | URL-encodes a string |
-| `c` | Pipes stdin to the clipboard (`xclip`) |
+| `c` | Pipes stdin to the clipboard (`wl-copy` on Wayland, `xclip` on X11) |
 | `map` | Alias for `xargs -n1` |
 
 ## Requirements
 
+Run `packages.sh` to install everything at once, or install manually:
+
 - Bash 4+
 - Python 3 (for `server` and `urlencode`)
-- `xclip` (for the `c` clipboard alias)
+- `xclip` (X11) or `wl-clipboard` (Wayland) — for the `c` clipboard alias
 - `xdg-utils` (for `o` / `xdg-open`)
-- `dig` (for `digga` and the public `ip` alias)
+- `dnsutils` (for `digga` and the public `ip` alias)
 - `tree` (for `tre`)
 - `bc` (for `gz`)
+- `fzf` (optional — enables fuzzy `Ctrl+R`, `Ctrl+T`, `Alt+C` in bash)
