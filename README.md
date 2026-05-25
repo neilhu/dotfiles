@@ -62,6 +62,7 @@ bash packages.sh
 | `.hgignore` | Global Mercurial ignore |
 | `.gdbinit` | GDB defaults |
 | `.hushlogin` | Suppresses login banner |
+| `.ssh/config` | SSH keep-alive, AddKeysToAgent, IdentitiesOnly defaults |
 
 ### Customization without forking
 
@@ -90,6 +91,8 @@ git config --global commit.gpgsign true
 | Name | What it does |
 |---|---|
 | `extract <file>` | Extract any archive (`.tar.gz`, `.zip`, `.bz2`, `.7z`, `.rar`, …) |
+| `weather [location]` | Current weather (auto-detects location if omitted) |
+| `stocks <SYMBOL>` | Latest price and daily change for a stock ticker |
 | `server [port]` | Serves the current directory over HTTP (`python3 -m http.server`) |
 | `mkd <dir>` | `mkdir -p` and `cd` in one step |
 | `fs [path]` | Human-readable size of a file or directory |
@@ -108,6 +111,25 @@ git config --global commit.gpgsign true
 | `c` | Pipes stdin to the clipboard (`wl-copy` on Wayland, `xclip` on X11) |
 | `map` | Alias for `xargs -n1` |
 | `g` | Alias for `git` with full tab completion |
+| `t` | Start or attach to a persistent tmux session named `main` |
+| `h` | `history` |
+| `j` | `jobs -l` |
+| `ports` | Show all listening ports (`ss -tlnp`) |
+
+## git aliases
+
+| Alias | Expands to |
+|---|---|
+| `g s` | `git status -s` |
+| `g l` | `git log --graph --abbrev-commit` (last 20) |
+| `g d` | Colored diff of working tree |
+| `g ca` | Stage all and commit |
+| `g go <branch>` | Switch to branch, creating it if needed |
+| `g unstage <file>` | `git restore --staged` |
+| `g last` | Show what the last commit touched |
+| `g sw <branch>` | `git switch` |
+| `g dm` | Delete all merged branches |
+| `g reb <n>` | Interactive rebase of last n commits |
 
 ## tmux
 

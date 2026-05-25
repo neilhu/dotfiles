@@ -6,6 +6,7 @@ RSYNC_EXCLUDES=(
 	--exclude ".git/"
 	--exclude ".claude/"
 	--exclude "init/"
+	--exclude ".ssh/"
 	--exclude ".DS_Store"
 	--exclude "bootstrap.sh"
 	--exclude "brew.sh"
@@ -33,9 +34,26 @@ function doBackup() {
 	fi;
 }
 
+function installSSHConfig() {
+	local src=".ssh/config"
+	local dst="$HOME/.ssh/config"
+	if [ -f "$src" ]; then
+		mkdir -p "$HOME/.ssh"
+		chmod 700 "$HOME/.ssh"
+		if [ ! -f "$dst" ]; then
+			cp "$src" "$dst"
+			chmod 600 "$dst"
+			echo "Installed ~/.ssh/config"
+		else
+			echo "~/.ssh/config already exists; skipping (merge manually if needed)"
+		fi
+	fi
+}
+
 function doIt() {
 	doBackup;
 	rsync "${RSYNC_EXCLUDES[@]}" -avh --no-perms . ~;
+	installSSHConfig;
 	source ~/.bash_profile;
 }
 

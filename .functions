@@ -181,3 +181,25 @@ function o() {
 function tre() {
 	tree -aC -I '.git|node_modules|bower_components' --dirsfirst "$@" | less -FRNX;
 }
+
+# Show current weather for a location (default: auto-detect)
+function weather() {
+	curl -s "wttr.in/${1:-}?format=3";
+}
+
+# Show the latest price for a stock symbol
+function stocks() {
+	local symbol="${1:?Usage: stocks SYMBOL}";
+	curl -s "https://query1.finance.yahoo.com/v7/finance/quote?symbols=${symbol}" \
+		| python3 -c "
+import sys, json
+data = json.load(sys.stdin)
+results = data.get('quoteResponse', {}).get('result', [])
+if not results:
+    print('No data found for: $symbol')
+    sys.exit(1)
+q = results[0]
+name = q.get('longName', q.get('shortName', ''))
+print(f\"{q['symbol']}: \${q['regularMarketPrice']:.2f}  ({q['regularMarketChangePercent']:+.2f}%)  {name}\")
+";
+}
