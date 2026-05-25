@@ -4,6 +4,8 @@ cd "$(dirname "${BASH_SOURCE}")";
 
 RSYNC_EXCLUDES=(
 	--exclude ".git/"
+	--exclude ".claude/"
+	--exclude "init/"
 	--exclude ".DS_Store"
 	--exclude "bootstrap.sh"
 	--exclude "brew.sh"

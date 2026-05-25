@@ -67,14 +67,13 @@ command -v hd > /dev/null || alias hd="hexdump -C"
 
 # Linux has md5sum and sha1sum natively
 
-# Trim new lines and copy to clipboard
-alias c="tr -d '\n' | xclip -selection clipboard"
+# Trim new lines and copy to clipboard (Wayland or X11)
+if [ -n "$WAYLAND_DISPLAY" ]; then
+	alias c="wl-copy"
+elif [ -n "$DISPLAY" ]; then
+	alias c="tr -d '\n' | xclip -selection clipboard"
+fi
 
-# Recursively delete `.DS_Store` files
-alias cleanup="find . -type f -name '*.DS_Store' -ls -delete"
-
-# Empty the Trash
-alias emptytrash="rm -rf ~/.Trash/*"
 
 # URL-encode strings
 alias urlencode='python3 -c "import sys, urllib.parse; print(urllib.parse.quote_plus(sys.argv[1]))"'
@@ -89,13 +88,12 @@ alias mergepdf='gs -q -dNOPAUSE -dBATCH -sDEVICE=pdfwrite -sOutputFile=_merged.p
 alias map="xargs -n1"
 
 # One of @janmoesen's ProTip™s
-for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
-	alias "${method}"="lwp-request -m '${method}'"
-done
+if command -v lwp-request &>/dev/null; then
+	for method in GET HEAD POST PUT DELETE TRACE OPTIONS; do
+		alias "${method}"="lwp-request -m '${method}'"
+	done
+fi
 
-# Kill all the tabs in Chrome to free up memory
-# [C] explained: http://www.commandlinefu.com/commands/view/402/exclude-grep-from-your-grepped-output-of-ps-alias-included-in-description
-alias chromekill="ps ux | grep '[C]hrome Helper --type=renderer' | grep -v extension-process | tr -s ' ' | cut -d ' ' -f2 | xargs kill"
 
 # Lock the screen (when going AFK)
 alias afk="loginctl lock-session"
