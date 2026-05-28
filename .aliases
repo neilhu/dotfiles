@@ -71,7 +71,7 @@ alias ports='ss -tlnp'
 alias update='sudo apt update && sudo apt upgrade'
 
 # IP addresses
-alias ip="dig +short myip.opendns.com @resolver1.opendns.com"
+alias digip="dig +short myip.opendns.com @resolver1.opendns.com"
 alias localip="hostname -I | awk '{print \$1}'"
 alias ips="command ip -o addr show | awk '{print \$2, \$4}'"
 
